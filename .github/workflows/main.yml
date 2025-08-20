@@ -41,5 +41,5 @@ jobs:
         key: ${{ secrets.EC2_SSH_KEY }}
         script: |
           cd /home/ubuntu/ahmed/rakaya
-          TAG=${{ env.TAG }} docker compose -f docker-compose.prod.yml pull
-          TAG=${{ env.TAG }} docker compose -f docker-compose.prod.yml up -d
+          TAG=${{ env.TAG }} docker compose -p production -f docker-compose.prod.yml pull
+          TAG=${{ env.TAG }} docker compose -p production -f docker-compose.prod.yml up -d
