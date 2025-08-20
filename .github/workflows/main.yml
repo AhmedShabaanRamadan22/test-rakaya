@@ -30,8 +30,8 @@ jobs:
         context: .
         push: true
         tags: |
-          ${{ secrets.DOCKER_USERNAME }}/dynamic-prod:latest
-          ${{ secrets.DOCKER_USERNAME }}/dynamic-prod:${{ env.TAG }}
+          ${{ secrets.DOCKER_USERNAME }}/dynamic-production:latest
+          ${{ secrets.DOCKER_USERNAME }}/dynamic-production:${{ env.TAG }}
 
     - name: Deploy to EC2 (Prod)
       uses: appleboy/ssh-action@v1.0.0
@@ -41,13 +41,5 @@ jobs:
         key: ${{ secrets.EC2_SSH_KEY }}
         script: |
           cd /home/ubuntu/ahmed/rakaya
-          echo "Stopping old containers..."
-          TAG=${{ env.TAG }} docker compose -f docker-compose.prod.yml down || true
-
-          echo "Cleaning up unused images..."
-          docker system prune -af
-
-          echo "Pulling new image..."
           TAG=${{ env.TAG }} docker compose -f docker-compose.prod.yml pull
-
-          echo "Starting new containers..."
+          TAG=${{ env.TAG }} docker compose -f docker-compose.prod.yml up -d
