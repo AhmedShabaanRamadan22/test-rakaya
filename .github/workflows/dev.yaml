@@ -1,4 +1,4 @@
-name: Build, Push, and Deploy (DEV)
+name: Build, Push, and Deploy (dev)
 
 on:
   push:
@@ -12,28 +12,19 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    # 1. Checkout code
     - name: Checkout code
       uses: actions/checkout@v3
 
-    # 2. Set dynamic Docker tag
-    - name: Set Docker tag
-      run: |
-        if [[ "${GITHUB_REF_NAME}" == "main" ]]; then
-          echo "TAG=prod-${GITHUB_RUN_NUMBER}" >> $GITHUB_ENV
-        else
-          echo "TAG=dev-${GITHUB_RUN_NUMBER}" >> $GITHUB_ENV
-        fi
+    - name: Set Docker tag (dev)
+      run: echo "TAG=dev-${GITHUB_RUN_NUMBER}" >> $GITHUB_ENV
 
-    # 3. Log in to Docker Hub
     - name: Log in to Docker Hub
       uses: docker/login-action@v3
       with:
         username: ${{ secrets.DOCKER_USERNAME }}
         password: ${{ secrets.DOCKER_PASSWORD }}
 
-    # 4. Build and push Docker image
-    - name: Build and push Docker image
+    - name: Build and push Docker image (dev)
       uses: docker/build-push-action@v5
       with:
         context: .
@@ -42,8 +33,7 @@ jobs:
           ${{ secrets.DOCKER_USERNAME }}/dynamic-dev:latest
           ${{ secrets.DOCKER_USERNAME }}/dynamic-dev:${{ env.TAG }}
 
-    # 5. SSH to EC2 and deploy using docker-compose
-    - name: Deploy to EC2 via SSH
+    - name: Deploy to EC2 (Prod)
       uses: appleboy/ssh-action@v1.0.0
       with:
         host: ${{ secrets.EC2_HOST }}
