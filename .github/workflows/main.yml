@@ -41,5 +41,13 @@ jobs:
         key: ${{ secrets.EC2_SSH_KEY }}
         script: |
           cd /home/ubuntu/ahmed/rakaya
+          echo "Stopping old containers..."
+          TAG=${{ env.TAG }} docker compose -f docker-compose.prod.yml down || true
+
+          echo "Cleaning up unused images..."
+          docker system prune -af
+
+          echo "Pulling new image..."
           TAG=${{ env.TAG }} docker compose -f docker-compose.prod.yml pull
-          TAG=${{ env.TAG }} docker compose -f docker-compose.prod.yml up -d
+
+          echo "Starting new containers..."
