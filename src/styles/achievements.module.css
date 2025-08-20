@@ -1,0 +1,16 @@
+.img-card {
+  height: 50vh;
+}
+
+.img-small-card {
+ height: 20vh;
+}
+
+@media screen and (max-width: 500px) {
+  .img-card {
+    height: 35vh;
+  }
+  .img-small-card{
+    height: 15vh;
+  }
+}

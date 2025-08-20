@@ -1,0 +1,33 @@
+// Reset all margins and paddings
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+// Reset font styles
+body {
+  font-family: Arial, sans-serif;
+  font-size: 16px;
+  line-height: 1.5;
+  overflow-x:hidden;
+}
+
+// Reset list styles
+ul, ol {
+  // list-style: none;
+}
+
+// Reset anchor styles
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+// Reset form styles
+input, textarea, button {
+  border: none;
+  outline: none;
+}
+
+// Add more reset styles as needed

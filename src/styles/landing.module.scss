@@ -1,0 +1,17 @@
+.img-card{
+    height: 18vh;
+    width: 120px !important;
+    object-fit: contain;
+}
+
+.my-6{
+    margin-top: 6rem;
+    margin-bottom: 6rem;
+}
+
+@media screen and (max-width:600px) {
+    .img-card{
+        height: 23vh;
+    }
+    
+}

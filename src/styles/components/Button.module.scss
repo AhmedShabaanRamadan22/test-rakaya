@@ -1,0 +1,40 @@
+@import "../colors";
+
+$scaleAmnt: 0.95;
+.btn {
+   $button-colors: (
+      primary: $primary,
+      secondary: $secondary,
+      third: $third,
+      forth: $forth,
+   );
+
+   @each $button-name, $button-color in $button-colors {
+      &-#{$button-name} {
+         background-color: $button-color;
+         transition: all 0.3s ease-in-out;
+         color: $third;
+         &-alt {
+            transition: all 0.3s ease-in-out;
+            border-color: $button-color;
+            border-width: 2px;
+            border-style: solid;
+            background-color: transparent;
+            color: $text-primary;
+            &:hover {
+               background-color: $button-color;
+               color: $third;
+            }
+            &:active {
+               scale: $scaleAmnt;
+            }
+         }
+         &:hover {
+            background-color: darken($button-color, 7%);
+         }
+         &:active{
+            scale: $scaleAmnt;
+         }
+      }
+   }
+}

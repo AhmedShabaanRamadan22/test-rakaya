@@ -1,0 +1,35 @@
+@import "./colors";
+
+
+@import "./colors";
+
+.card {
+   // min-width: 15rem;
+   // width: 17rem;
+   height: 23rem;
+   &-scroll {
+      overflow-y: scroll;
+      margin-bottom: 10px;
+      margin-left: 5px;
+      &::-webkit-scrollbar {
+         width: 5px;
+         margin-bottom: 10px;
+      }
+
+      &::-webkit-scrollbar-track {
+         background-color: transparent;
+         border-radius: 5px;
+      }
+
+      &::-webkit-scrollbar-thumb {
+         background-color:rgba(255,255,255,0.5);
+         border-radius: 10px;
+         margin-bottom: 10px;
+      }
+   }
+}
+@media (max-width:1300px) {
+   .card {
+      // min-width: 14rem;
+   }
+}

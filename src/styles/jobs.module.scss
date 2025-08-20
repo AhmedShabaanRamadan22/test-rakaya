@@ -1,0 +1,9 @@
+@import "./colors";
+
+
+.section{
+    &-title{
+        border-bottom: 2px solid $primary;
+        padding: 10px;
+    }
+}

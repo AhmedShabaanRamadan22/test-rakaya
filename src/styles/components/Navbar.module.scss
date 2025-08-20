@@ -1,0 +1,59 @@
+@import "../colors";
+
+.nav-link {
+   position: relative;
+   display: inline-block;
+   text-decoration: none;
+   font-weight: 600;
+   color: black;
+   transition: color 0.3s;
+
+   &::before {
+      content: "";
+      position: absolute;
+      bottom: -2px;
+      width: 100%;
+      height: 2px;
+      background-color: black;
+      transform: scaleX(0);
+      transition: transform 0.3s;
+   }
+
+   &:hover {
+      color: black;
+   }
+
+   &:hover::before,
+   &-active::before {
+      transform: scaleX(1);
+   }
+}
+
+.nav-link-dark{
+   position: relative;
+   display: inline-block;
+   text-decoration: none;
+   font-weight: 600;
+   color: white;
+   transition: color 0.3s;
+
+   &::before {
+      content: "";
+      position: absolute;
+      bottom: -2px;
+      width: 100%;
+      height: 2px;
+      background-color: white;
+      transform: scaleX(0);
+      transition: transform 0.3s;
+   }
+
+   &:hover {
+      color: white;
+   }
+
+   &:hover::before,
+   &-active::before {
+      transform: scaleX(1);
+   }
+}
