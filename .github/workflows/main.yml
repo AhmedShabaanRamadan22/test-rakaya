@@ -18,7 +18,12 @@ jobs:
 
     # 2. Set dynamic Docker tag
     - name: Set Docker tag
-      run: echo "TAG=build-${{ github.run_number }}" >> $GITHUB_ENV
+      run: |
+        if [[ "${GITHUB_REF_NAME}" == "main" ]]; then
+          echo "TAG=prod-${GITHUB_RUN_NUMBER}" >> $GITHUB_ENV
+        else
+          echo "TAG=dev-${GITHUB_RUN_NUMBER}" >> $GITHUB_ENV
+        fi
 
     # 3. Log in to Docker Hub
     - name: Log in to Docker Hub
@@ -34,8 +39,8 @@ jobs:
         context: .
         push: true
         tags: |
-          ${{ secrets.DOCKER_USERNAME }}/Dynamic-production:latest
-          ${{ secrets.DOCKER_USERNAME }}/Dynamic-production:${{ env.TAG }}
+          ${{ secrets.DOCKER_USERNAME }}/dynamic-dev:latest
+          ${{ secrets.DOCKER_USERNAME }}/dynamic-dev:${{ env.TAG }}
 
     # 5. SSH to EC2 and deploy using docker-compose
     - name: Deploy to EC2 via SSH
@@ -46,5 +51,5 @@ jobs:
         key: ${{ secrets.EC2_SSH_KEY }}
         script: |
           cd /home/ubuntu/ahmed/rakaya
-            TAG=${{ env.TAG }} docker compose -f docker-compose.prod.yml pull
-            TAG=${{ env.TAG }} docker compose -f docker-compose.prod.yml up -d
+          TAG=${{ env.TAG }} docker compose -f docker-compose.prod.yml pull
+          TAG=${{ env.TAG }} docker compose -f docker-compose.prod.yml up -d
