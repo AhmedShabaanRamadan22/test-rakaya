@@ -30,8 +30,8 @@ jobs:
         context: .
         push: true
         tags: |
-          ${{ secrets.DOCKER_USERNAME }}/dynamic-dev:latest
-          ${{ secrets.DOCKER_USERNAME }}/dynamic-dev:${{ env.TAG }}
+          ${{ secrets.DOCKER_USERNAME }}/rakaya-dev:latest
+          ${{ secrets.DOCKER_USERNAME }}/rakaya-dev:${{ env.TAG }}
 
     - name: Deploy to EC2 (dev)
       uses: appleboy/ssh-action@v1.0.0
