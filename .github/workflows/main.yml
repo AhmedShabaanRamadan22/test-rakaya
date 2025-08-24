@@ -15,8 +15,8 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v3
 
-    - name: Set Docker tag (main)
-      run: echo "TAG=main-${{ github.run_number }}" >> $GITHUB_ENV
+    - name: Set Docker tag (production)
+      run: echo "TAG=production-${{ github.run_number }}" >> $GITHUB_ENV
 
     - name: Log in to Docker Hub
       uses: docker/login-action@v3
@@ -25,14 +25,15 @@ jobs:
         password: ${{ secrets.DOCKER_PASSWORD }}
 
     - name: Pull latest dev image
-      run: docker pull ${{ secrets.DOCKER_USERNAME }}/rakaya:dev:latest
+      run: docker pull ${{ secrets.DOCKER_USERNAME }}/rakaya:dev-latest
 
     - name: Tag and push as main
       run: |
-        docker tag ${{ secrets.DOCKER_USERNAME }}/rakaya:dev:latest ${{ secrets.DOCKER_USERNAME }}/rakaya:${{ env.TAG }}
-        docker tag ${{ secrets.DOCKER_USERNAME }}/rakaya:dev:latest ${{ secrets.DOCKER_USERNAME }}/rakaya:latest
+        docker tag ${{ secrets.DOCKER_USERNAME }}/rakaya:dev-latest ${{ secrets.DOCKER_USERNAME }}/rakaya:${{ env.TAG }}
+        docker tag ${{ secrets.DOCKER_USERNAME }}/rakaya:dev-latest ${{ secrets.DOCKER_USERNAME }}/rakaya:production-latest
         docker push ${{ secrets.DOCKER_USERNAME }}/rakaya:${{ env.TAG }}
-        docker push ${{ secrets.DOCKER_USERNAME }}/rakaya:latest
+        docker push ${{ secrets.DOCKER_USERNAME }}/rakaya:production-latest
+
     - name: Deploy to EC2 (Prod)
       uses: appleboy/ssh-action@v1.0.0
       with:
